@@ -20,8 +20,8 @@ io.on('connection',(socket) => {
         createdAt : 123
     });
 
-    socket.on('createEmail',(newEmail)=>{
-        console.log('create email ',newEmail);
+    socket.on('createMessage',(message)=>{
+        console.log('create email ',message);
     });
 
 
