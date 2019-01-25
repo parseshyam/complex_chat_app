@@ -13,7 +13,7 @@ describe('generateMessage',() => {
 
 describe('generateLocationMessage',() => {
     it('should generate correct location object',()=>{
-        var from =' shyam';
+        var from = ' shyam';
         var latitude = 15;
         var longitude = 13;
         var url = 'https://www.google.com/maps?q=15,13';
