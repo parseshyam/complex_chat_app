@@ -19,8 +19,6 @@ app.use(express.static(publicPath));
 io.on('connection',(socket) => {
     console.log('new user connected !');
 
-   
-
     socket.on('join',(params,callback) => {
         if(!isRealString(params.name)||!isRealString(params.room)){
            return callback('name and room name required ');
@@ -28,9 +26,9 @@ io.on('connection',(socket) => {
         socket.join(params.room);
         users.removeUser(socket.id); // TO REMOVE USER FROM ANY PREVIOUS ROOM !!
         users.addUser(socket.id,params.name,params.room);
-
-        io.to(params.room).emit('updateUserList',users.getUserList(params.room));
         socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
+        io.to(params.room).emit('updateUserList',users.getUserList(params.room));
+       // socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
         socket.broadcast.to(params.room).emit('newMessage' ,generateMessage('Admin',`${params.name} has Joined. !`));
         callback();
     });
@@ -65,14 +63,14 @@ io.on('connection',(socket) => {
 socket.on('typing',()=>{
     var user = users.getUser(socket.id);
     if(user){
-        io.to(user.room).emit('typing',user.name);
+        socket.broadcast.to(user.room).emit('typing',user.name);
     }
 });
 
 socket.on('nottyping',()=>{
     var user = users.getUser(socket.id);
     if(user){
-        io.to(user.room).emit('nottyping');
+        socket.broadcast.to(user.room).emit('nottyping');
     }
 });
 

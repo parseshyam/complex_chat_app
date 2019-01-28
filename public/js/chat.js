@@ -126,3 +126,12 @@ locationButton.on('click',function(){
         alert('unable to fetch location give permission ',error);
     })
 });
+
+
+function myFunction(data) {
+    var x = document.getElementById("snackbar");
+    snackbar.innerHTML = data;
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", "");
+    }, 1000);
+  }
