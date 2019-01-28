@@ -29,8 +29,8 @@ io.on('connection',(socket) => {
 
         
        // var bool1 = users.users.find((user)=>user.name.toUpperCase() === params.name.toUpperCase()); // ye try kiya but not working .
-      //  var bool2 = users.users.find((user)=>user.room.toUpperCase() === params.room.toUpperCase()); /// ye try kiya but not working .
-
+       // var bool2 = users.users.find((user)=>user.room.toUpperCase() === params.room.toUpperCase()); /// ye try kiya but not working .
+       // ABOVE CODE DIDN'T WORKED REASON BEING HERE IS YOU WERE TESTING FOR TWO DIFFERENT USERS NOT THE SAME USER CHECK BELOW.
         ///////////////////////////////////// MY CODE TO CHECK EXIXTING USER IN ANY ROOM OR IF SAME NAME IS USED. /////// REMOVE THIS IF ERROR PERSISTS.. 
         var bool = users.users.find((user)=>{
             if(user.name.toUpperCase() === params.name.toUpperCase()){
@@ -50,7 +50,7 @@ io.on('connection',(socket) => {
 
         ///////////////////////////////////// CODE ENDS HERE.///////////////////////////////////////////////////////////////////////// 
 
-        
+
         users.addUser(socket.id,params.name,params.room);
         socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
         io.to(params.room).emit('updateUserList',users.getUserList(params.room));
