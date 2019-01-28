@@ -27,15 +27,29 @@ io.on('connection',(socket) => {
         users.removeUser(socket.id); // TO REMOVE USER FROM ANY PREVIOUS ROOM !!
 
 
-        // MY CODE TO CHECK EXIXTING USER .............
-        var bool1 = users.users.find((user)=>user.name.toUpperCase() === params.name.toUpperCase());
-        var bool2 = users.users.find((user)=>user.room.toUpperCase() === params.room.toUpperCase());
+        
+       // var bool1 = users.users.find((user)=>user.name.toUpperCase() === params.name.toUpperCase()); // ye try kiya but not working .
+      //  var bool2 = users.users.find((user)=>user.room.toUpperCase() === params.room.toUpperCase()); /// ye try kiya but not working .
 
-        if(bool1 && bool2){   //YOU CAN CHANGE IT TO OR CONDITION IF YOU DONT WANT TO ADD USER WITH SAME NAME IN ANY GROUP .
+        ///////////////////////////////////// MY CODE TO CHECK EXIXTING USER IN ANY ROOM OR IF SAME NAME IS USED. /////// REMOVE THIS IF ERROR PERSISTS.. 
+        var bool = users.users.find((user)=>{
+            if(user.name.toUpperCase() === params.name.toUpperCase()){
+                if(user.room.toUpperCase() === params.room.toUpperCase()){
+                    return true ;
+                } else {
+                    return false ;
+                } 
+            } else {
+                return false ;
+            }
+        });
+
+        if(bool){   //YOU CAN CHANGE IT TO OR CONDITION IF YOU DONT WANT TO ADD USER WITH SAME NAME IN ANY GROUP .
             return callback('user already exists !');
         }
 
-        ///////////////////////////////////// MY CODE .........
+        ///////////////////////////////////// CODE ENDS HERE........................................ .........
+        
         users.addUser(socket.id,params.name,params.room);
         socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
         io.to(params.room).emit('updateUserList',users.getUserList(params.room));
@@ -68,7 +82,6 @@ io.on('connection',(socket) => {
         console.log('user disconnected from server. ');
     });
 
-
 ///////
 socket.on('typing',()=>{
     var user = users.getUser(socket.id);
@@ -83,9 +96,6 @@ socket.on('nottyping',()=>{
         socket.broadcast.to(user.room).emit('nottyping');
     }
 });
-
-
-
 ///////
 });
 
