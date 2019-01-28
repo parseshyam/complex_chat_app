@@ -25,6 +25,17 @@ io.on('connection',(socket) => {
         }
         socket.join(params.room);
         users.removeUser(socket.id); // TO REMOVE USER FROM ANY PREVIOUS ROOM !!
+
+
+        // MY CODE TO CHECK EXIXTING USER .............
+        var bool1 = users.users.find((user)=>user.name.toUpperCase() === params.name.toUpperCase());
+        var bool2 = users.users.find((user)=>user.room.toUpperCase() === params.room.toUpperCase());
+
+        if(bool1 && bool2){   //YOU CAN CHANGE IT TO OR CONDITION IF YOU DONT WANT TO ADD USER WITH SAME NAME IN ANY GROUP .
+            return callback('user already exists !');
+        }
+
+        ///////////////////////////////////// MY CODE .........
         users.addUser(socket.id,params.name,params.room);
         socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
         io.to(params.room).emit('updateUserList',users.getUserList(params.room));
@@ -34,7 +45,6 @@ io.on('connection',(socket) => {
     });
 
     
-
     socket.on('createMessage',(message,callback)=>{
        var user = users.getUser(socket.id);
        if(user && isRealString(message.text)){
