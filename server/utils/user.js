@@ -1,8 +1,4 @@
-[{
-    id :' ',
-    name :' ',
-    room : ''
-}]//add user method ID,NAME,ROOM .
+//add user method ID,NAME,ROOM .
 // remove usre by SOCKET.ID.
 // get user (id)
 //getUserList(room)
