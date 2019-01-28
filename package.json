@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "deparam": "^1.0.5",
     "express": "^4.16.4",
     "moment": "^2.24.0",
     "nodemon": "^1.18.9",
