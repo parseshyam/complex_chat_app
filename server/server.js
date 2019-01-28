@@ -44,11 +44,12 @@ io.on('connection',(socket) => {
             }
         });
 
-        if(bool){   //YOU CAN CHANGE IT TO OR CONDITION IF YOU DONT WANT TO ADD USER WITH SAME NAME IN ANY GROUP .
+        if(bool){   //YOU CAN CHANGE IT TO OR CONDITION IF YOU DONT WANT TO ADD USER WITH SAME NAME IN ANY GROUP 
             return callback('user already exists !');
         }
 
-        ///////////////////////////////////// CODE ENDS HERE........................................ .........
+        ///////////////////////////////////// CODE ENDS HERE.///////////////////////////////////////////////////////////////////////// 
+
         
         users.addUser(socket.id,params.name,params.room);
         socket.to(params.room).emit('newMessage',generateMessage('Admin','Welcome to the chat app'));
