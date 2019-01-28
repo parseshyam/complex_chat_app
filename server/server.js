@@ -58,7 +58,27 @@ io.on('connection',(socket) => {
             io.to(user.room).emit('newMessage',generateMessage('Admin',`${user.name} has left !`));
         }
         console.log('user disconnected from server. ');
-    })
+    });
+
+
+///////
+socket.on('typing',()=>{
+    var user = users.getUser(socket.id);
+    if(user){
+        io.to(user.room).emit('typing',user.name);
+    }
+});
+
+socket.on('nottyping',()=>{
+    var user = users.getUser(socket.id);
+    if(user){
+        io.to(user.room).emit('nottyping');
+    }
+});
+
+
+
+///////
 });
 
 

@@ -12,6 +12,29 @@ function scrollToBottom(){
          messages.scrollTop(scrollHeight);
      }
 }
+    var feedback = document.getElementById('feedback');
+    var message = document.getElementById('message');
+    message.addEventListener('keypress',function(){
+       socket.emit('typing');
+    });
+
+    socket.on('typing',function(name){
+        feedback.innerHTML = `<p>${name} is typing...</p>`;
+    });
+
+    message.addEventListener('keyup',function(){
+        socket.emit('nottyping');
+     });
+ 
+     socket.on('nottyping',function(name){
+         setTimeout(function(){
+            feedback.innerHTML = 'People';
+         },2000);
+        
+     });
+ 
+
+
 
 
 
